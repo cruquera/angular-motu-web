@@ -1,0 +1,25 @@
+.main-content {
+  margin: 3rem;
+}
+
+.slide {
+  margin: 1rem;
+}
+
+.example-card {
+  animation-timing-function: linear;
+}
+
+.card-image {
+  justify-content: center;
+  display: flex;
+  width: 100%;
+}
+
+.card-image img {
+  max-width: 250px;
+}
+
+.footer-card {
+  margin: 4px;
+}

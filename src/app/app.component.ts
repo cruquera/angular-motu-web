@@ -13,7 +13,7 @@ export class AppComponent {
     margin: 10,
     autoplay: true,
     responsiveClass: true,
-    navText: ['Previous', 'Next'],
+    navText: ['Anterior', 'Próximo'],
     responsive: {
       0: {
         items: 1,
@@ -28,14 +28,16 @@ export class AppComponent {
     nav: true,
   };
 
-  public obterUsuarioFormGroup: FormGroup;
+  public idUsuario: number = 0;
+  public usuarioFormGroup: FormGroup;
   public produtos: Produto[] = [];
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.obterUsuarioFormGroup = this.formBuilder.group({
+    this.usuarioFormGroup = this.formBuilder.group({
       idUsuario: ['', Validators.required],
+      flRequestConcluida: ['', Validators.required],
     });
 
     let produto = new Produto();
@@ -74,5 +76,9 @@ export class AppComponent {
     produtoQuatro.preco = 124.9;
     produtoQuatro.tags = ['Lançamento', 'Essencial'];
     this.produtos.push(produtoQuatro);
+  }
+
+  public onClickObterRecomendacoes(): void {
+    this.usuarioFormGroup.get('flRequestConcluida').setValue(true);
   }
 }

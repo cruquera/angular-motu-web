@@ -46,7 +46,6 @@ export class AppComponent {
   };
   public displayedColumns: string[] = ['descricao', 'qtd', 'preco'];
   public dataSource = ELEMENT_DATA;
-
   public idUsuario: number = 10;
   public compra: Compra = new Compra();
   public recomendacoes: Recomendacao[] = [];
@@ -66,24 +65,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    let produto = new Recomendacao();
-    produto.descricao = 'Deo Parfum Essencial Elixir Masculino';
-    produto.tags = ['Lançamento', 'Essencial'];
-    this.recomendacoes.push(produto);
-    let produtoDois = new Recomendacao();
-    produtoDois.descricao = 'Deo Parfum Essencial Elixir Masculino';
-    produtoDois.tags = ['Lançamento', 'Essencial'];
-    this.recomendacoes.push(produtoDois);
-    let produtoTres = new Recomendacao();
-    produtoTres.descricao = 'Deo Parfum Essencial Elixir Masculino';
-    produtoTres.tags = ['Lançamento', 'Essencial'];
-    this.recomendacoes.push(produtoTres);
-    let produtoQuatro = new Recomendacao();
-    produtoQuatro.descricao = 'Deo Parfum Essencial Elixir Masculino';
-    produtoQuatro.tags = ['Lançamento', 'Essencial'];
-    this.recomendacoes.push(produtoQuatro);
     this.obterRecomendacoes();
-
     this.dataSource.forEach(
       (produto) => (this.compra.valorCompra += produto.preco)
     );
@@ -91,6 +73,7 @@ export class AppComponent {
   }
 
   public obterRecomendacoes(): void {
+    debugger;
     this.flLoading = true;
     this.motuCoreService.obterRecomendacoesUsuario(this.idUsuario).subscribe(
       (response) => {
@@ -99,6 +82,7 @@ export class AppComponent {
           recomendacaoAux.descricao = recomendacao.product;
           recomendacaoAux.nota = recomendacao.notas;
           recomendacaoAux.tags = recomendacao.generos.split('|');
+          this.recomendacoes.unshift(recomendacaoAux);
         });
         this.flLoading = false;
       },

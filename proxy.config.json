@@ -1,0 +1,8 @@
+{
+    "/motuAPI/*": {
+        "target": "https://motu.azurewebsites.net",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    }
+}

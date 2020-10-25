@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,6 +13,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MotuCoreService } from './shared/services/motu-core.service';
+import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +22,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     CarouselModule,
     MatButtonModule,
     MatCardModule,
@@ -27,6 +31,7 @@ import { AppComponent } from './app.component';
     MatInputModule,
     MatTableModule,
     MatToolbarModule,
+    NgxLoadingModule.forRoot({}),
     FormsModule,
     ReactiveFormsModule,
   ],
@@ -41,7 +46,7 @@ import { AppComponent } from './app.component';
     MatToolbarModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [MotuCoreService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

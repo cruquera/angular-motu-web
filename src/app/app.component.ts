@@ -4,6 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Compra } from './shared/models/compra.model';
 import { Produto } from './shared/models/produto.model';
 import { Recomendacao } from './shared/models/recomendacao.model';
+import { MotuCoreService } from './shared/services/motu-core.service';
 
 const ELEMENT_DATA: Produto[] = [
   {
@@ -51,7 +52,11 @@ export class AppComponent {
   public recomendacoes: Recomendacao[] = [];
   public flLoading = false;
 
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(
+    iconRegistry: MatIconRegistry,
+    sanitizer: DomSanitizer,
+    private motuCoreService: MotuCoreService
+  ) {
     iconRegistry.addSvgIcon(
       'logo',
       sanitizer.bypassSecurityTrustResourceUrl(
@@ -87,7 +92,21 @@ export class AppComponent {
 
   public obterRecomendacoes(): void {
     this.flLoading = true;
-    this.flLoading = false;
+    this.motuCoreService.obterRecomendacoesUsuario(this.idUsuario).subscribe(
+      (response) => {
+        response.forEach((recomendacao) => {
+          let recomendacaoAux = new Recomendacao();
+          recomendacaoAux.descricao = recomendacao.product;
+          recomendacaoAux.nota = recomendacao.notas;
+          recomendacaoAux.tags = recomendacao.generos.split('|');
+        });
+        this.flLoading = false;
+      },
+      (error) => {
+        console.log(error);
+        this.flLoading = false;
+      }
+    );
   }
 
   public onClickCalcular() {

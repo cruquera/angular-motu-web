@@ -1,6 +1,22 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Compra } from './shared/models/compra.model';
 import { Produto } from './shared/models/produto.model';
+import { Recomendacao } from './shared/models/recomendacao.model';
+
+const ELEMENT_DATA: Produto[] = [
+  {
+    descricao: 'Deo Parfum Essencial Clássico Masculino',
+    quantidade: 1,
+    preco: 124.9,
+  },
+  {
+    descricao: 'Sabonete Líquido em Gel Lima e Flor',
+    quantidade: 2,
+    preco: 61.8,
+  },
+];
 
 @Component({
   selector: 'app-root',
@@ -8,7 +24,7 @@ import { Produto } from './shared/models/produto.model';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  customOptions: any = {
+  public customOptions: any = {
     loop: true,
     margin: 10,
     autoplay: true,
@@ -27,58 +43,56 @@ export class AppComponent {
     },
     nav: true,
   };
+  public displayedColumns: string[] = ['descricao', 'qtd', 'preco'];
+  public dataSource = ELEMENT_DATA;
 
-  public idUsuario: number = 0;
-  public usuarioFormGroup: FormGroup;
-  public produtos: Produto[] = [];
+  public idUsuario: number = 10;
+  public compra: Compra = new Compra();
+  public recomendacoes: Recomendacao[] = [];
+  public flLoading = false;
 
-  constructor(private formBuilder: FormBuilder) {}
-
-  ngOnInit(): void {
-    this.usuarioFormGroup = this.formBuilder.group({
-      idUsuario: ['', Validators.required],
-      flRequestConcluida: ['', Validators.required],
-    });
-
-    let produto = new Produto();
-    produto.id = 95554;
-    produto.nome = 'Essencial Elixir Masculino';
-    produto.descricao = 'Deo Parfum Essencial Elixir Masculino';
-    produto.conteudo = '100ml';
-    produto.marca = 'Essencial';
-    produto.preco = 124.9;
-    produto.tags = ['Lançamento', 'Essencial'];
-    this.produtos.push(produto);
-    let produtoDois = new Produto();
-    produtoDois.id = 95554;
-    produtoDois.nome = 'Essencial Elixir Masculino';
-    produtoDois.descricao = 'Deo Parfum Essencial Elixir Masculino';
-    produtoDois.conteudo = '100ml';
-    produtoDois.marca = 'Essencial';
-    produtoDois.preco = 124.9;
-    produtoDois.tags = ['Lançamento', 'Essencial'];
-    this.produtos.push(produtoDois);
-    let produtoTres = new Produto();
-    produtoTres.id = 95554;
-    produtoTres.nome = 'Essencial Elixir Masculino';
-    produtoTres.descricao = 'Deo Parfum Essencial Elixir Masculino';
-    produtoTres.conteudo = '100ml';
-    produtoTres.marca = 'Essencial';
-    produtoTres.preco = 124.9;
-    produtoTres.tags = ['Lançamento', 'Essencial'];
-    this.produtos.push(produtoTres);
-    let produtoQuatro = new Produto();
-    produtoQuatro.id = 95554;
-    produtoQuatro.nome = 'Essencial Elixir Masculino';
-    produtoQuatro.descricao = 'Deo Parfum Essencial Elixir Masculino';
-    produtoQuatro.conteudo = '100ml';
-    produtoQuatro.marca = 'Essencial';
-    produtoQuatro.preco = 124.9;
-    produtoQuatro.tags = ['Lançamento', 'Essencial'];
-    this.produtos.push(produtoQuatro);
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+      'logo',
+      sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/images/icons/natura-logo.svg'
+      )
+    );
   }
 
-  public onClickObterRecomendacoes(): void {
-    this.usuarioFormGroup.get('flRequestConcluida').setValue(true);
+  ngOnInit(): void {
+    let produto = new Recomendacao();
+    produto.descricao = 'Deo Parfum Essencial Elixir Masculino';
+    produto.tags = ['Lançamento', 'Essencial'];
+    this.recomendacoes.push(produto);
+    let produtoDois = new Recomendacao();
+    produtoDois.descricao = 'Deo Parfum Essencial Elixir Masculino';
+    produtoDois.tags = ['Lançamento', 'Essencial'];
+    this.recomendacoes.push(produtoDois);
+    let produtoTres = new Recomendacao();
+    produtoTres.descricao = 'Deo Parfum Essencial Elixir Masculino';
+    produtoTres.tags = ['Lançamento', 'Essencial'];
+    this.recomendacoes.push(produtoTres);
+    let produtoQuatro = new Recomendacao();
+    produtoQuatro.descricao = 'Deo Parfum Essencial Elixir Masculino';
+    produtoQuatro.tags = ['Lançamento', 'Essencial'];
+    this.recomendacoes.push(produtoQuatro);
+    this.obterRecomendacoes();
+
+    this.dataSource.forEach(
+      (produto) => (this.compra.valorCompra += produto.preco)
+    );
+    this.compra.valorDesconto = this.compra.valorCompra * 0.3;
+  }
+
+  public obterRecomendacoes(): void {
+    this.flLoading = true;
+    this.flLoading = false;
+  }
+
+  public onClickCalcular() {
+    this.flLoading = true;
+    this.compra.valorEntrega = 20.5;
+    this.flLoading = false;
   }
 }

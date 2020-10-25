@@ -5,9 +5,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatStepperModule } from '@angular/material/stepper';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,9 +23,9 @@ import { AppComponent } from './app.component';
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
-    MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
-    MatStepperModule,
+    MatTableModule,
     MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
@@ -35,9 +35,9 @@ import { AppComponent } from './app.component';
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
-    MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
-    MatStepperModule,
+    MatTableModule,
     MatToolbarModule,
     ReactiveFormsModule,
   ],
